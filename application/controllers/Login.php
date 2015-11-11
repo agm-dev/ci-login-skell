@@ -25,16 +25,15 @@ Class Login extends CI_Controller
 	public function index()
 	{
 		//LOGIN FORM Y PÁGINA PRINCIPAL
-
-		//Check login - si logueado redirigir a success.
+		$data['title'] = APP_TITLE;		
 
 		$this->load->helper('form');
-		$this->load->library('form_validation');
-
-		$data['title'] = APP_TITLE;
+		$this->load->library('form_validation');		
 
 		$this->form_validation->set_rules('txt_username', 'Username', 'required');
 		$this->form_validation->set_rules('txt_password', 'Password', 'required');
+
+		$this->_check_login();
 
 		if($this->form_validation->run() === FALSE)
 		{			
@@ -91,7 +90,17 @@ Class Login extends CI_Controller
 	 */
 	private function _check_login()
 	{
-		
+		$data['title'] = APP_TITLE;
+		$user = $this->users_model->get_users($this->session->id);
+		if(isset($user['username']) && count($user['username']) != 0) 
+		{
+			// Loged user page.
+			$this->load->view('templates/header', $data);
+			$this->load->view('login/success');
+			$this->load->view('templates/footer');
+			$this->output->_display(); //Without this sentence exit() would interrupt the output library.
+			exit();
+		}
 	}
 
 	/**
