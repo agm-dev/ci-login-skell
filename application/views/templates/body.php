@@ -1,0 +1,1 @@
+<p>This is a body template as example.</p>
