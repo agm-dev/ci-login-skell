@@ -24,7 +24,6 @@ Class Login extends CI_Controller
 	 **/
 	public function index()
 	{
-		//LOGIN FORM Y PÁGINA PRINCIPAL
 		$data['title'] = APP_TITLE;		
 
 		$this->load->helper('form');
@@ -56,9 +55,15 @@ Class Login extends CI_Controller
 			}
 			if(	($user['username'] == $this->input->post('txt_username') OR
 				$user['email'] == $this->input->post('txt_username')) &&
-				password_verify($this->input->post('txt_password'), $user['hash']) )
+				password_verify($this->input->post('txt_password'), $user['hash']) &&
+				$user['activated'] != 0 )
 			{
 				$this->session->id = $user['username'];
+				$this->session->admin = $user['admin'];
+				$userData = array(	'username'		=>	$user['username'],
+									'email'			=>	$user['email'],
+									'last_login'	=>	date('Y-m-d H:i:s'));
+				$this->users_model->update_user($userData);
 				// Loged user page.
 				$this->load->view('templates/header', $data);
 				$this->load->view('login/success');
