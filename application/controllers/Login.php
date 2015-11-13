@@ -55,7 +55,8 @@ Class Login extends CI_Controller
 			}
 			if(	($user['username'] == $this->input->post('txt_username') OR
 				$user['email'] == $this->input->post('txt_username')) &&
-				password_verify($this->input->post('txt_password'), $user['hash']) )
+				password_verify($this->input->post('txt_password'), $user['hash']) &&
+				$user['activated'] != 0 )
 			{
 				$this->session->id = $user['username'];
 				$this->session->admin = $user['admin'];
