@@ -1,13 +1,14 @@
+<h2>Users</h2>
 <?php if($admin != 0): ?>
 	<div>
-		<input type="button" value="New User"/>
+		<a class="btn btn-default btn-primary" href="/users/create">New User</a>
 	</div>
 <?php endif; ?>
-<div>
-	<table>
+<div class="table-responsive">
+	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>Nº.</td><td>Username</td>
+				<td>Nº</td><td>Username</td>
 			</tr>
 		</thead>
 		<tbody>
