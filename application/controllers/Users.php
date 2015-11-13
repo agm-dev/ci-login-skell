@@ -42,7 +42,7 @@ Class Users extends CI_Controller
 
 	public function create()
 	{
-
+		echo 'create';
 	}
 
 	public function update()

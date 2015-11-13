@@ -1,7 +1,7 @@
 <h2>Users</h2>
 <?php if($admin != 0): ?>
 	<div>
-		<input type="button" class="btn btn-default btn-primary" value="New User"/>
+		<a class="btn btn-default btn-primary" href="/users/create">New User</a>
 	</div>
 <?php endif; ?>
 <div class="table-responsive">
