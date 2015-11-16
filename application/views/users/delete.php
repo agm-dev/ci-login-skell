@@ -17,6 +17,6 @@
   </div>  
   <button type="submit" class="btn btn-default btn-lg btn-block btn-primary" name='btn_submit' id='btn_submit'>Delete user</button>
   <div style="margin-top: 10px;">
-    <a class="btn btn-lg btn-primary btn-block" href="/users">Go Back</a>
+    <a class="btn btn-lg btn-primary btn-block" href="/users/update/<?php echo $user['username']; ?>">Go Back</a>
   </div>
 </form>

@@ -1,0 +1,7 @@
+.clickable:hover
+{
+	/*background-color: #286090 !important;*/
+	background-color: #337AB7 !important;
+	color: white;
+	cursor: pointer;
+}
