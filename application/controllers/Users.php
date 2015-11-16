@@ -110,9 +110,44 @@ Class Users extends CI_Controller
 
 	}
 
-	public function delete()
+	public function delete($username = FALSE)
 	{
+		if ( $username === FALSE )
+		{
+			redirect('/users');
+		}
 
+		$this->_check_login();
+		if($this->session->admin != 1)
+		{
+			redirect('/');
+		}
+
+		$data['title'] = APP_TITLE;
+		$data['user'] = $this->users_model->get_users($username);
+		if(!isset($data['user']['username']))
+		{
+			redirect('/users');
+		}
+
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('chk_delete','Checkbox', 'required');	
+
+		if($this->form_validation->run() === FALSE)
+		{			
+			$this->load->view('templates/header', $data);			
+			$this->load->view('users/delete', $data);
+			$this->load->view('templates/footer');
+		}
+		else
+		{			
+			$this->users_model->delete_users($data['user']['username']);
+			$this->load->view('templates/header', $data);			
+			$this->load->view('users/user_deleted', $data);
+			$this->load->view('templates/footer');	
+		}
 	}
 
 	/**
