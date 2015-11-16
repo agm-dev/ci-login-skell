@@ -8,15 +8,20 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>Nº</td><td>Username</td>
+				<td><strong>Nº</strong></td>
+				<td><strong>Username</strong></td>
+				<td><strong>Activated</strong></td>
+				<td><strong>Admin</strong></td>
 			</tr>
 		</thead>
 		<tbody>
 			<?php $number=1; ?>
 			<?php foreach($users as $user): ?>
-				<tr>
+				<tr class="clickable" onclick="location='/users/update/<?php echo $user['username']; ?>';">
 					<td><?php echo $number++;?></td>
 					<td><?php echo $user['username']; ?></td>
+					<td><i class="fa fa-circle" style="color:<?php echo ($user['activated']==1)? '#5CB85C' : '#D9534F'; ?>;"></i></td>
+					<td><i class="fa fa-circle" style="color:<?php echo ($user['admin']==1)? '#5CB85C' : '#D9534F'; ?>;"></i></td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>

@@ -105,14 +105,110 @@ Class Users extends CI_Controller
 		}
 	}
 
-	public function update()
+	public function update($username = FALSE)
 	{
+		if($username === FALSE)
+		{
+			redirect('/users');
+		}
 
+		$this->_check_login();
+		if($this->session->admin != 1)
+		{
+			redirect('/');
+		}
+
+		$data['title'] = APP_TITLE;
+		$data['user'] = $this->users_model->get_users($username);
+		$data['updated'] = 2;
+		if(!isset($data['user']['username'])){
+			redirect('/users');
+		}
+
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('txt_username','Username', 'required');		
+		$this->form_validation->set_rules('txt_email1', 'Email', 'required');
+		$this->form_validation->set_rules('txt_email2', 'Email (repeat)', 'required');
+
+		if(	$this->form_validation->run() === FALSE OR
+			$this->input->post('txt_password1') != $this->input->post('txt_password2') OR
+			$this->input->post('txt_email1') != $this->input->post('txt_email2'))		
+		{				
+			$this->load->view('templates/header', $data);
+			$this->load->view('users/update', $data);
+			$this->load->view('templates/footer');
+		}
+		else
+		{
+			$userData = array(	'username'	=>	$this->input->post('txt_username'),
+								'email'		=>	$this->input->post('txt_email1'));
+			if(strlen($this->input->post('txt_password1')) > 0)
+			{
+				$userData['hash'] = password_hash($this->input->post('txt_password1'), PASSWORD_DEFAULT, array('cost'	=>	$this->_calculate_cost())); //You can use constant HASH_COST if you have set it on constants.php file.
+			}
+			if($this->input->post('chk_activated') == 1)
+			{
+				$userData['activated'] = 1;
+				$userData['activation'] = date('Y-m-d H:i:s');	
+			}
+			if($this->input->post('chk_admin') == 1)
+			{
+				$userData['admin'] = 1;
+			}
+			if($this->users_model->update_user($userData))
+			{
+				$data['updated'] = 1;	
+			}
+			else
+			{
+				$data['updated'] = 0;
+			}			
+			$this->load->view('templates/header', $data);
+			$this->load->view('users/update', $data);
+			$this->load->view('templates/footer');	
+		}
 	}
 
-	public function delete()
+	public function delete($username = FALSE)
 	{
+		if($username === FALSE)
+		{
+			redirect('/users');
+		}
 
+		$this->_check_login();
+		if($this->session->admin != 1)
+		{
+			redirect('/');
+		}
+
+		$data['title'] = APP_TITLE;
+		$data['user'] = $this->users_model->get_users($username);
+		if(!isset($data['user']['username']))
+		{
+			redirect('/users');
+		}
+
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('chk_delete','Checkbox', 'required');	
+
+		if($this->form_validation->run() === FALSE)
+		{			
+			$this->load->view('templates/header', $data);			
+			$this->load->view('users/delete', $data);
+			$this->load->view('templates/footer');
+		}
+		else
+		{			
+			$this->users_model->delete_users($data['user']['username']);
+			$this->load->view('templates/header', $data);			
+			$this->load->view('users/user_deleted', $data);
+			$this->load->view('templates/footer');	
+		}
 	}
 
 	/**
