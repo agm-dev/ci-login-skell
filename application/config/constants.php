@@ -85,5 +85,6 @@ define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 //APPLICATION CONSTANTS
-define('APP_TITLE', 'Loginapp - 0.1');
+define('APP_TITLE', 'Loginapp - 0.1'); //The title of your application.
 define('HASH_COST', 11); // You can use the private function _calculate_cost() on login controller to set this.
+define('MAIL_ADDRESS', 'loginapp@hardcod.es'); //The email address of your application.
