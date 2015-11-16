@@ -68,7 +68,7 @@ Class Users extends CI_Controller
 			//Si se pasa la validación, creamos el usuario.
 			$userData = array(	'username'	=>	$this->input->post('txt_username'),
 								'email'		=>	$this->input->post('txt_email1'),
-								'hash'		=>	password_hash($this->input->post('txt_password1'), PASSWORD_DEFAULT, array('cost'	=>	$this->_calculate_cost())));
+								'hash'		=>	password_hash($this->input->post('txt_password1'), PASSWORD_DEFAULT, array('cost'	=>	$this->_calculate_cost()))); //You can use constant HASH_COST if you have set it on constants.php file.
 			if($this->input->post('chk_activated') == 1)
 			{
 				$userData['activated'] = 1;
@@ -80,11 +80,16 @@ Class Users extends CI_Controller
 			}
 
 			if($this->users_model->set_user($userData))
-			{
-				if($this->input->post('chk_email') === 1)
-				{
-					//Send email with activation code.
-					//TODO
+			{				
+				if($this->input->post('chk_email') == 1)
+				{					
+					$userInfo = $this->users_model->get_users($userData['username']);
+					$message = 	"<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>".
+								"<h2>".APP_TITLE." - Account activation</h2>".
+								"<p>Now you are registered in".APP_TITLE.". Visit the link below to activate your account.</p>".
+								"<a target='_blank' href='".base_url()."activate/".$userInfo['activation_code']."'>Click to activate your account!</a>".
+								"</body></html>";
+					$this->_email($userInfo['email'], 'Account activation', $message);
 				}
 
 				$this->load->view('templates/header', $data);			
@@ -127,6 +132,30 @@ Class Users extends CI_Controller
 			redirect('/');
 		}
 		
+	}
+
+	/**
+	 *	Sends an email.
+	 */
+	private function _email($to, $subject, $message)
+	{
+		if(!isset($to) OR !isset($subject) OR !isset($message))
+		{
+			return FALSE;
+		}
+		$this->load->library('email');
+		$config['mailtype'] = 'html';
+		$config['charset'] = 'utf-8';
+		$this->email->initialize($config);
+		$this->email->from(MAIL_ADDRESS, APP_TITLE);
+		$this->email->to($to);
+		$this->email->subject($subject);
+		$this->email->message($message);
+		if($this->email->send())
+		{
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	/**
