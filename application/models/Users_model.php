@@ -72,8 +72,7 @@ Class Users_model extends CI_Model
 	}
 
 	/**
-	 * 	Gets users from table users by default. Accepts username or email to return
-	 * 	a specific user if exists.	
+	 * 	Gets user who matches the activation code.	
 	 *
 	 * @param       string  $code    Input string
 	 * @return      array
@@ -85,6 +84,22 @@ Class Users_model extends CI_Model
 			return FALSE;
 		}
 		$query = $this->db->get_where('users', array('activation_code'	=>	$code));
+		return $query->row_array();
+	}
+
+	/**
+	 * 	Gets user who matches the recovery code.
+	 *
+	 * @param       string  $code    Input string
+	 * @return      array
+	 */
+	public function get_user_by_recovery($code = FALSE)
+	{
+		if($code === FALSE)
+		{
+			return FALSE;
+		}
+		$query = $this->db->get_where('users', array('recovery'	=>	$code));
 		return $query->row_array();
 	}
 
