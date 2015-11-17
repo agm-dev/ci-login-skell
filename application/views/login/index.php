@@ -10,3 +10,6 @@
 <div class="row" style="text-align:center;">
 	<p><a href="/register">Not registered yet? </a></p>
 </div>
+<div class="row" style="text-align:center;">
+	<p><a href="/recovery">Forgot your password? </a></p>
+</div>
