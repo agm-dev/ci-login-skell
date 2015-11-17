@@ -1,6 +1,15 @@
 <?php echo validation_errors(); ?>
 
-<?php echo form_open('/users/create', array('role'=>'form', 'style' => 'max-width:400px;')); ?>
+<?php 
+	if($admin == 1)
+	{
+		echo form_open('/users/create', array('role'=>'form', 'style' => 'max-width:400px;')); 
+	}
+	else
+	{
+		echo form_open('/register', array('role'=>'form', 'style' => 'max-width:400px;')); 
+	}
+?>
 <div class="form-group">
 	<label for="txt_username">Username</label>
 	<input type="text" class="form-control" id="txt_username" name='txt_username' placeholder="Username" required autofocus/>
