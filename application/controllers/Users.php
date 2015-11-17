@@ -13,8 +13,8 @@ Class Users extends CI_Controller
 	/**
 	 *	Constructor
 	 **/
-	public function __construct(){
-
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->model('users_model');
 	}
