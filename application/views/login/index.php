@@ -7,3 +7,6 @@
 <input type="password" class="form-control" id="txt_password" name='txt_password' placeholder="Password" required />
 <button type="submit" class="btn btn-lg btn-primary btn-block" name="btn_submit">Login</button>
 </form>
+<div class="row" style="text-align:center;">
+	<p><a href="/register">Not registered yet? </a></p>
+</div>
