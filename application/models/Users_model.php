@@ -48,8 +48,9 @@ Class Users_model extends CI_Model
 	 * 	Gets users from table users by default. Accepts username or email to return
 	 * 	a specific user if exists.	
 	 *
-	 * @param       string  $str    Input string
-	 * @return      string
+	 * @param       string  $username  Input string
+	 * @param       string  $email 	   Input string
+	 * @return      array
 	 */
 	public function get_users($username = FALSE, $email = FALSE)
 	{
@@ -68,6 +69,23 @@ Class Users_model extends CI_Model
 			$query = $this->db->get_where('users', array('username'	=>	$username));
 			return $query->row_array();
 		}
+	}
+
+	/**
+	 * 	Gets users from table users by default. Accepts username or email to return
+	 * 	a specific user if exists.	
+	 *
+	 * @param       string  $code    Input string
+	 * @return      array
+	 */
+	public function get_user_by_activation_code($code = FALSE)
+	{
+		if($code === FALSE)
+		{
+			return FALSE;
+		}
+		$query = $this->db->get_where('users', array('activation_code'	=>	$code));
+		return $query->row_array();
 	}
 
 	/**
