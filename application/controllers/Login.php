@@ -56,13 +56,15 @@ Class Login extends CI_Controller
 			if(	($user['username'] == $this->input->post('txt_username') OR
 				$user['email'] == $this->input->post('txt_username')) &&
 				password_verify($this->input->post('txt_password'), $user['hash']) &&
-				$user['activated'] != 0 )
+				$user['activated'] != 0 &&
+				$user['login_fails'] < MAX_FAILED_LOGIN_ATTEMPTS )
 			{
 				$this->session->id = $user['username'];
 				$this->session->admin = $user['admin'];
 				$userData = array(	'username'		=>	$user['username'],
 									'email'			=>	$user['email'],
-									'last_login'	=>	date('Y-m-d H:i:s'));
+									'last_login'	=>	date('Y-m-d H:i:s'),
+									'login_fails'	=>	0);
 				$this->users_model->update_user($userData);
 				// Loged user page.
 				$this->load->view('templates/header', $data);
@@ -71,8 +73,22 @@ Class Login extends CI_Controller
 			}
 			else
 			{
+				$data['login_failed'] = TRUE;
+				if($user['login_fails'] >= MAX_FAILED_LOGIN_ATTEMPTS)
+				{
+					$data['blocked'] = TRUE;
+				}
+				else
+				{
+					$userData = array(	'username'		=>	$user['username'],
+										'email'			=>	$user['email'],									
+										'login_fails'	=>	$user['login_fails']+1);
+					$this->users_model->update_user($userData);
+				}				
 				// Login form.
-				header('Location: '. base_url());
+				$this->load->view('templates/header', $data);
+				$this->load->view('login/index', $data);
+				$this->load->view('templates/footer');
 			}
 		}
 	}

@@ -1,5 +1,14 @@
+<?php if(isset($login_failed)): ?>
+	<div class="row" style="text-align:center;">
+		<p>Login has failed.</p>
+	</div>
+<?php endif; ?>
+<?php if(isset($blocked)): ?>
+	<div class="row" style="text-align:center;">
+		<p>Your user account is now locked. You can unlock it changing your password <a href="/recovery">here</a>.</p>
+	</div>
+<?php endif; ?>
 <?php echo validation_errors(); ?>
-
 <?php echo form_open('login/', array('class'=>'form-signin')); ?>
 <label for="txt_username" class="sr-only">Username</label>
 <input type="text" class="form-control" id="txt_username" name='txt_username' placeholder="Username" required autofocus/>
