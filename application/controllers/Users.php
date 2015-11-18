@@ -153,18 +153,28 @@ Class Users extends CI_Controller
 				$userData['activated'] = 1;
 				$userData['activation'] = date('Y-m-d H:i:s');	
 			}
+			else
+			{
+				$userData['activated'] = 0;
+				$userData['activation'] = NULL;		
+			}
 			if($this->input->post('chk_admin') == 1)
 			{
 				$userData['admin'] = 1;
 			}
-			if($this->users_model->update_user($userData))
+			else
 			{
+				$userData['admin'] = 0;
+			}
+			if($this->users_model->update_user($userData))
+			{				
 				$data['updated'] = 1;	
 			}
 			else
 			{
 				$data['updated'] = 0;
-			}			
+			}
+			$data['user'] = $this->users_model->get_users($username);			
 			$this->load->view('templates/header', $data);
 			$this->load->view('users/update', $data);
 			$this->load->view('templates/footer');	
