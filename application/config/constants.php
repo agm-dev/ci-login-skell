@@ -88,3 +88,4 @@ define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 define('APP_TITLE', 'Loginapp - 0.1'); //The title of your application.
 define('HASH_COST', 11); // You can use the private function _calculate_cost() on login controller to set this.
 define('MAIL_ADDRESS', 'loginapp@hardcod.es'); //The email address of your application.
+define('MAX_FAILED_LOGIN_ATTEMPTS', 5); //Indicates the max number of failed login attempts before an user account is unable to log in. Set it to 0 blocks login for all accounts.

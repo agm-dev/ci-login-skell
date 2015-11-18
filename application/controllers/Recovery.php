@@ -94,7 +94,7 @@ Class Recovery extends CI_Controller
 					$array = array(	'username'		=>	$data['user']['username'],
 									'email'			=>	$data['user']['email'],
 									'recovery'		=>	NULL,
-									/*'login_fails'	=>	0,*/ //Not implemented yet.
+									'login_fails'	=>	0,
 									'hash'			=>	password_hash($this->input->post('txt_password1'), PASSWORD_DEFAULT, array('cost'	=>	$this->_calculate_cost()))); //You can use constant HASH_COST if you have set it on constants.php file.			
 					$this->users_model->update_user($array);
 
