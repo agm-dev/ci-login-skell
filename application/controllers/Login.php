@@ -68,6 +68,7 @@ Class Login extends CI_Controller
 				$this->users_model->update_user($userData);
 				// Loged user page.
 				$this->load->view('templates/header', $data);
+				$this->load->view('templates/navbar');
 				$this->load->view('login/success');
 				$this->load->view('templates/footer');
 			}
@@ -117,6 +118,7 @@ Class Login extends CI_Controller
 		{
 			// Loged user page.
 			$this->load->view('templates/header', $data);
+			$this->load->view('templates/navbar');
 			$this->load->view('login/success');
 			$this->load->view('templates/footer');
 			$this->output->_display(); //Without this sentence exit() would interrupt the output library.

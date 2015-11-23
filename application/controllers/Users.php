@@ -33,6 +33,7 @@ Class Users extends CI_Controller
 		$data['title'] = APP_TITLE;				
 		$data['users'] = $this->users_model->get_users();
 		$this->load->view('templates/header', $data);
+		$this->load->view('templates/navbar');
 		$this->load->view('users/index', $data);
 		$this->load->view('templates/footer');
 	}
@@ -59,7 +60,8 @@ Class Users extends CI_Controller
 			$this->input->post('txt_password1') != $this->input->post('txt_password2') OR
 			$this->input->post('txt_email1') != $this->input->post('txt_email2'))
 		{			
-			$this->load->view('templates/header', $data);			
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/navbar');			
 			$this->load->view('users/create', $data);
 			$this->load->view('templates/footer');
 		}
@@ -92,13 +94,15 @@ Class Users extends CI_Controller
 					$this->_email($userInfo['email'], 'Account activation', $message);
 				}
 
-				$this->load->view('templates/header', $data);			
+				$this->load->view('templates/header', $data);
+				$this->load->view('templates/navbar');			
 				$this->load->view('users/create_success', $data);
 				$this->load->view('templates/footer');	
 			}					
 			else
 			{
-				$this->load->view('templates/header', $data);			
+				$this->load->view('templates/header', $data);
+				$this->load->view('templates/navbar');			
 				$this->load->view('users/create_error', $data);
 				$this->load->view('templates/footer');	
 			}			
@@ -137,6 +141,7 @@ Class Users extends CI_Controller
 			$this->input->post('txt_email1') != $this->input->post('txt_email2'))		
 		{				
 			$this->load->view('templates/header', $data);
+			$this->load->view('templates/navbar');
 			$this->load->view('users/update', $data);
 			$this->load->view('templates/footer');
 		}
@@ -176,6 +181,7 @@ Class Users extends CI_Controller
 			}
 			$data['user'] = $this->users_model->get_users($username);			
 			$this->load->view('templates/header', $data);
+			$this->load->view('templates/navbar');
 			$this->load->view('users/update', $data);
 			$this->load->view('templates/footer');	
 		}
@@ -208,14 +214,16 @@ Class Users extends CI_Controller
 
 		if($this->form_validation->run() === FALSE)
 		{			
-			$this->load->view('templates/header', $data);			
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/navbar');			
 			$this->load->view('users/delete', $data);
 			$this->load->view('templates/footer');
 		}
 		else
 		{			
 			$this->users_model->delete_users($data['user']['username']);
-			$this->load->view('templates/header', $data);			
+			$this->load->view('templates/header', $data);
+			$this->load->view('templates/navbar');			
 			$this->load->view('users/user_deleted', $data);
 			$this->load->view('templates/footer');	
 		}
