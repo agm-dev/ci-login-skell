@@ -10,6 +10,7 @@
 <?php endif; ?>
 <?php echo validation_errors(); ?>
 <?php echo form_open('login/', array('class'=>'form-signin')); ?>
+<img src="/assets/img/logo.png" class="form-signin" style="margin-left:-20px;">
 <label for="txt_username" class="sr-only">Username</label>
 <input type="text" class="form-control" id="txt_username" name='txt_username' placeholder="Username" required autofocus/>
 <label for="txt_password" class="sr-only">Password</label>
