@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: loginapp
 -- ------------------------------------------------------
--- Server version	5.5.44-0ubuntu0.14.04.1
+-- Server version	5.5.46-0ubuntu0.14.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,6 +41,7 @@ CREATE TABLE `users` (
   `register` datetime NOT NULL,
   `activation` datetime DEFAULT NULL,
   `last_login` datetime DEFAULT NULL,
+  `login_fails` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`username`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -52,7 +53,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('test','test@test.com','$2y$11$Jml26.CxfMzIJSfwAavhJ.1VAjRnb28wPLZuxN7S0FUXv5EIJ.kH.',NULL,NULL,0,0,'2015-09-27 00:53:01',NULL,NULL);
+INSERT INTO `users` VALUES ('admin','admin@test.es','$2y$11$Z3xoGNRuQn3TAVaA5YN3Lekeud1dyXy1KfoDUSpmjAiV3BWh8pqMe',NULL,NULL,1,1,'2015-11-13 10:57:30','2015-11-16 17:03:15','2015-11-23 13:56:39',0),('test','test@test.com','$2y$11$Jml26.CxfMzIJSfwAavhJ.1VAjRnb28wPLZuxN7S0FUXv5EIJ.kH.',NULL,NULL,1,0,'2015-09-27 00:53:01',NULL,'2015-11-23 13:56:35',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -65,4 +66,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-05 10:02:33
+-- Dump completed on 2015-11-23 13:58:55
