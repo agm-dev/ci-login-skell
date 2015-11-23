@@ -23,3 +23,9 @@
 <div class="row" style="text-align:center;">
 	<p><a href="/recovery">Forgot your password? </a></p>
 </div>
+<script type="text/javascript">
+  window.onload = function(){
+    var body = document.getElementsByTagName('body');
+    body[0].setAttribute("class", "frontpageBackground");
+  }
+</script>	
